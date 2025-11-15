@@ -1,0 +1,113 @@
+/* ========== Base (Mobile-first, no media query) ========== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+:root{
+  --bg: #ffffff;
+  --fg: #111111;
+  --muted: #666a73;
+  --figure-bg: #f5f7fb;
+  --figure-fg: #0d0f14;
+  --figure-border: #222;
+  --accent: #0b5fff;
+}
+
+html { scroll-behavior: smooth; } /* sẽ tắt ở prefers-reduced-motion */
+
+body{
+  margin:0; padding:0;
+  font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
+  background: var(--bg); color: var(--fg);
+}
+
+.skip{ position:absolute; left:-9999px; }
+.skip:focus{ left:0; top:0; padding:.5rem .75rem; background:#000; color:#fff; z-index:1000; }
+
+.site-header{ padding:1rem; max-width: 1100px; margin-inline:auto; }
+.site-header h1{ margin:0 0 .25rem; font-size: clamp(1.5rem, 4vw, 2.25rem); }
+.lede{ color: var(--muted); margin:0; }
+
+#main{ max-width: 1100px; margin: 0 auto; padding: 1rem; }
+
+/* Mobile gallery: 1 cột, gap 10px */
+.gallery{
+  display: grid;
+  grid-template-columns: 1fr;      /* 1 cột */
+  gap: 10px;                       /* 10px cả hàng & cột */
+}
+
+figure{
+  margin:0;
+  border: 2px solid var(--figure-border);
+  background: var(--figure-bg);
+  color: var(--figure-fg);
+  /* Đảm bảo tỉ lệ ảnh & cắt gọn nội dung */
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+img{ width:100%; height:100%; object-fit: cover; display:block; }
+figcaption{
+  padding:.5rem .75rem;
+  font-size:.95rem;
+  border-top: 1px solid var(--figure-border);
+  background: rgba(255,255,255,.6);
+  color: inherit;
+}
+
+/* Nút Back to top */
+.to-top{
+  position: fixed; right: 16px; bottom: 16px;
+  padding: .5rem .75rem; border-radius: 999px;
+  background: var(--accent); color:#fff; text-decoration:none; font-weight:600;
+}
+
+/* ========== Tablet (>= 772px) ========== */
+@media (min-width: 772px){
+  .gallery{
+    grid-template-columns: 1fr 1fr; /* 2 cột */
+    /* không lặp lại display:grid vì đã có ở mobile */
+  }
+  /* Bo tròn figure thành hình tròn */
+  figure{
+    border-radius: 50%;
+  }
+  /* Figure cuối cùng span cả 2 cột */
+  .gallery figure:last-of-type{
+    grid-column: 1 / -1;
+  }
+}
+
+/* ========== Large (>= 992px) ========== */
+@media (min-width: 992px){
+  /* Mỗi figure thứ 3 span 2 cột */
+  .gallery figure:nth-child(3n){
+    grid-column: 1 / -1;  /* chiếm cả 2 cột */
+  }
+  /* Bỏ bo tròn tất cả figure */
+  figure{ border-radius: 0; }
+}
+
+/* ========== User Preferences ========== */
+/* 1) prefers-reduced-motion: tắt cuộn mượt */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *, *::before, *::after{ animation: none !important; transition: none !important; }
+}
+
+/* 2) prefers-color-scheme: dark (giả định default là light) */
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg: #0b0d12;
+    --fg: #e6e9ef;
+    --muted: #aeb6c7;
+    --figure-bg: #101522;          /* nền tối cho figure */
+    --figure-fg: #ffe080;          /* chữ sáng vàng nhạt */
+    --figure-border: #000000;      /* viền đen */
+    --accent: #7aa2ff;
+  }
+  figcaption{ background: rgba(0,0,0,.35); }
+}
