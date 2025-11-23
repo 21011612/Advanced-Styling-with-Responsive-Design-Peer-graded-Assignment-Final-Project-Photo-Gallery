@@ -1,0 +1,4 @@
+W3C HTML validator: https://validator.w3.org/
+WAVE checker: https://wave.webaim.org/
+MDN prefers-reduced-motion: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/%40media/prefers-reduced-motion
+MDN prefers-color-scheme: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/%40media/prefers-color-scheme
